@@ -5,26 +5,27 @@
   --grey-01: #2f2f2f;
   --grey-02: #3a3a3a;
   --grey-03: #8a8a79;
+  --dark-blue: #213547;
   --sky-blue: #a6c4dd;
   --black: #1a1a1a;
 
   --background: var(--black);
   --text: var(--grey-03);
   --primary: var(--green);
+  --primary-light: var(--green-light);
 }
 
 /*===============
     GLOBAL
   ===============*/
 
-*,
-*::before,
-*::after {
+* {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
   font-family: 'Outfit', sans-serif;
   font-weight: normal;
+  font-style: normal;
   color: var(--text);
 }
 
