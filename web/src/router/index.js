@@ -14,14 +14,14 @@ const router = createRouter({
       component: () => import('../views/LoginView.vue')
     },
     {
-      path: '/assign-role',
-      name: 'assign-role',
-      component: () => import('../views/AssignRoleView.vue')
-    },
-    {
       path: '/assign-role/callback',
       name: 'assign-role/callback',
       component: () => import('../views/CallBackView.vue')
+    },
+    {
+      path: '/assign-role/:id',
+      name: 'assign-role',
+      component: () => import('../views/AssignRoleView.vue')
     },
     {
       path: '/dashboard',
