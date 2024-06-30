@@ -9,14 +9,7 @@
         seccion <span> 10 </span> del server.
       </p>
       <p>Usos restantes: <span> 15</span></p>
-      <div class="auth-container">
-        <ButtonPrimary class="login-btn" text="Authorize" pre-icon="fa-brands fa-discord" />
-        <ToolTip
-          message="We need your permission to access to your account ID"
-          width="30ch"
-          style="margin-left: 2ch"
-        />
-      </div>
+      <ButtonPrimary class="login-btn" text="Authorize" pre-icon="fa-brands fa-discord" />
     </div>
   </div>
 </template>
@@ -40,7 +33,6 @@ import ToolTip from '@/components/ToolTip.vue'
   align-items: center;
   width: 40%;
   max-width: 600px;
-  min-width: 400px;
 
   padding: 1rem 2rem;
   border-radius: 0.8rem;
