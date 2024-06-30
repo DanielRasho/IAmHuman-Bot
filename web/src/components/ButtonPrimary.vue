@@ -40,7 +40,6 @@ function handleClick() {
   transition: background-color ease-in-out 0.3s;
 }
 .button i {
-  font-family: 'Font Awesome 6 Free';
   color: var(--dark-blue);
 }
 .button:hover {
