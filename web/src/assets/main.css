@@ -1,35 +1,57 @@
-@import './base.css';
+:root {
+  --white: #fff;
+  --green: #42b883;
+  --green-light: #42d392;
+  --grey-01: #2f2f2f;
+  --grey-02: #3a3a3a;
+  --grey-03: #8a8a79;
+  --sky-blue: #a6c4dd;
+  --black: #1a1a1a;
+
+  --background: var(--black);
+  --text: var(--grey-03);
+  --primary: var(--green);
+}
+
+/*===============
+    GLOBAL
+  ===============*/
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: 'Outfit', sans-serif;
+  font-weight: normal;
+  color: var(--text);
+}
+
+body {
+  min-width: 100vw;
+  min-height: 100vh;
+  background-color: var(--background);
+  transition:
+    color 0.5s,
+    background-color 0.5s;
+
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button {
+  border: none;
+}
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
+  min-width: 100vw;
+  min-height: 100vh;
 }
 
-a,
-.green {
+a:link,
+a:visited,
+a:active {
   text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
-
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
 }
