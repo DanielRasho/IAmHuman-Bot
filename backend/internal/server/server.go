@@ -20,7 +20,7 @@ type Server struct {
 	engine *gin.Engine
 }
 
-func (s *Server) Run() ( error ){
+func (s *Server) Run() error {
 	return s.engine.Run()
 }
 
@@ -30,7 +30,7 @@ func NewServer() (*Server, error) {
 	db, err := database.New()
 
 	// Check if connection to DB was succesfull
-	if err != nil{
+	if err != nil {
 		return nil, err
 	}
 
@@ -50,20 +50,22 @@ func (s *Server) registerRoutes() {
 	{
 		login.POST("/", s.handlePostLogin)
 	}
-	
+
 	dashboard := s.engine.Group("/dashboard")
 	dashboard.Use(AuthRequiredMiddleware())
 	{
+		dashboard.GET("/", s.handleGetDashboard)
 		dashboard.POST("/", s.handlePostDashboard)
 	}
 }
 
-func AuthRequiredMiddleware( ) gin.HandlerFunc{
-	return func(c * gin.Context) {
+func AuthRequiredMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
 		token := c.GetHeader("Authorization")
 		_, err := authentication.AuthenticateJWTToken(token)
 		if err != nil {
-			c.JSON(http.StatusUnauthorized, gin.H{"message" : "Invalid JWT token"})
+			c.JSON(http.StatusUnauthorized, gin.H{"message": "Invalid JWT token"})
+			c.Abort()
 			return
 		}
 		c.Next()
