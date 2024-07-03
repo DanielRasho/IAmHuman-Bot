@@ -56,6 +56,7 @@ func (s *Server) registerRoutes() {
 	{
 		dashboard.GET("/", s.handleGetDashboard)
 		dashboard.POST("/", s.handlePostDashboard)
+		dashboard.DELETE("/", s.handleDeleteDashboard)
 	}
 }
 

@@ -2,7 +2,6 @@ package server
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strconv"
 	"time"
@@ -30,8 +29,6 @@ func (s *Server) handleGetDashboard(c *gin.Context) {
 		limit = 10
 	}
 	offset := (page - 1) * limit
-
-	fmt.Printf("page: %d, limit: %d, offset: %d\n", page, limit, offset)
 
 	rows, err := s.db.Query(
 		`select 
@@ -92,13 +89,27 @@ func (s *Server) handlePostDashboard(c *gin.Context) {
 		invite.RoleId)
 
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"message": "Cant create invitation"})
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Cant create invitation."})
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, gin.H{"message": "invitation created"})
+	c.IndentedJSON(http.StatusOK, gin.H{"message": "invitation created."})
 }
 
 func (s *Server) handleDeleteDashboard(c *gin.Context) {
+	invitationId, err := strconv.Atoi(c.Query("invitation_id"))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "invitation_id query must not be empty."})
+	}
 
+	_, err = s.db.Exec(`DELETE from invitation 
+		WHERE id = $1`,
+		invitationId)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "cannot delete invitation."})
+		return
+	}
+
+	c.IndentedJSON(http.StatusOK, gin.H{"message": "invitation deleted."})
 }
