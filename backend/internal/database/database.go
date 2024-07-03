@@ -23,7 +23,7 @@ type Service interface {
 	// It returns an error if the connection cannot be closed.
 	Close() error
 	Query(query string, args ...interface{}) (*sql.Rows, error)
-	QueryRow(query string, args ...interface{}) (*sql.Row)
+	QueryRow(query string, args ...interface{}) *sql.Row
 	Exec(query string, args ...interface{}) (sql.Result, error)
 }
 
@@ -124,19 +124,17 @@ func (s *service) Close() error {
 }
 
 func (s *service) Query(query string, args ...interface{}) (*sql.Rows, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
+	ctx := context.Background()
 
 	rows, err := s.db.QueryContext(ctx, query, args...)
-	if err != nil{
+	if err != nil {
 		return nil, err
 	}
 
-	defer rows.Close()
-	return rows, err
+	return rows, nil
 }
 
-func (s *service) QueryRow(query string, args ...interface{}) (*sql.Row) {
+func (s *service) QueryRow(query string, args ...interface{}) *sql.Row {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
