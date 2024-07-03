@@ -24,19 +24,25 @@ func (s *Server) Run() ( error ){
 	return s.engine.Run()
 }
 
-func NewServer() *Server {
+func NewServer() (*Server, error) {
 	port, _ := strconv.Atoi(os.Getenv("PORT"))
 	router := gin.Default()
+	db, err := database.New()
+
+	// Check if connection to DB was succesfull
+	if err != nil{
+		return nil, err
+	}
 
 	NewServer := &Server{
 		port:   port,
-		db:     database.New(),
+		db:     db,
 		engine: router,
 	}
 
 	NewServer.registerRoutes()
 
-	return NewServer
+	return NewServer, nil
 }
 
 func (s *Server) registerRoutes() {

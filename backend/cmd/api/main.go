@@ -7,9 +7,12 @@ import (
 
 func main() {
 
-	server := server.NewServer()
+	server, err := server.NewServer()
+	if err != nil {
+		panic(fmt.Sprintf("cannot instantiate server: %s", err))
+	}
 
-	err := server.Run()
+	err = server.Run()
 	if err != nil {
 		panic(fmt.Sprintf("cannot start server: %s", err))
 	}
