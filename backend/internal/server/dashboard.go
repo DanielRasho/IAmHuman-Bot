@@ -100,6 +100,7 @@ func (s *Server) handleDeleteDashboard(c *gin.Context) {
 	invitationId, err := strconv.Atoi(c.Query("invitation_id"))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "invitation_id query must not be empty."})
+		return
 	}
 
 	_, err = s.db.Exec(`DELETE from invitation 
@@ -107,7 +108,7 @@ func (s *Server) handleDeleteDashboard(c *gin.Context) {
 		invitationId)
 
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"message": "cannot delete invitation."})
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "If ID was valid, the invitation got deleted."})
 		return
 	}
 
