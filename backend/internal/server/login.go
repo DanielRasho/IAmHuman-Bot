@@ -8,11 +8,6 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
-type userCredentials struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
-}
-
 func (s *Server) handlePostLogin(c *gin.Context) {
 	var credentials userCredentials
 

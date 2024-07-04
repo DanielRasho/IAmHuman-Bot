@@ -4,20 +4,9 @@ import (
 	"encoding/json"
 	"net/http"
 	"strconv"
-	"time"
 
 	"github.com/gin-gonic/gin"
 )
-
-type invitation struct {
-	Id          string    `json:"id"`
-	Class       string    `json:"class"`
-	Section     int       `json:"section"`
-	MissingUses int       `json:"missing_uses"`
-	CreateAt    time.Time `json:"created_at"`
-	ServerId    string    `json:"server_id"`
-	RoleId      string    `json:"role_id"`
-}
 
 func (s *Server) handleGetDashboard(c *gin.Context) {
 	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))

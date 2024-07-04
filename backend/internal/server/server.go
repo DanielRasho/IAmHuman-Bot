@@ -12,14 +12,6 @@ import (
 	"backend/internal/database"
 )
 
-type Server struct {
-	port int
-
-	db database.Service
-
-	engine *gin.Engine
-}
-
 func (s *Server) Run() error {
 	return s.engine.Run()
 }
