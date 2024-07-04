@@ -135,8 +135,7 @@ func (s *service) Query(query string, args ...interface{}) (*sql.Rows, error) {
 }
 
 func (s *service) QueryRow(query string, args ...interface{}) *sql.Row {
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
+	ctx := context.Background()
 
 	row := s.db.QueryRowContext(ctx, query, args...)
 

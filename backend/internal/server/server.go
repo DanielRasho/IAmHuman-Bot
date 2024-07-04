@@ -58,6 +58,12 @@ func (s *Server) registerRoutes() {
 		dashboard.POST("/", s.handlePostDashboard)
 		dashboard.DELETE("/", s.handleDeleteDashboard)
 	}
+
+	assignRole := s.engine.Group("/assign-role")
+	{
+		assignRole.GET("/", s.handleGetAssignRole)
+		assignRole.POST("/success", s.handlePostAssignRoleSuccess)
+	}
 }
 
 func AuthRequiredMiddleware() gin.HandlerFunc {
