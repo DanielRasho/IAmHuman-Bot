@@ -2,14 +2,51 @@
   <div class="body">
     <div class="card">
       <h1>Login</h1>
-      <input type="text" placeholder="username" />
-      <input type="password" placeholder="password" />
-      <ButtonPrimary class="login-btn" text="Login" post-icon="fa-solid fa-arrow-right" />
+      <input type="text" v-model="username" placeholder="username" />
+      <input type="password" v-model="password" placeholder="password" />
+      <ButtonPrimary
+        class="login-btn"
+        text="Login"
+        post-icon="fa-solid fa-arrow-right"
+        :isDisabled="isButtonDisabled"
+        @clicked="handleLogin"
+      />
     </div>
   </div>
 </template>
 <script setup>
 import ButtonPrimary from '@/components/ButtonPrimary.vue'
+import { ref } from 'vue'
+import { APISettings } from '@/utils/apiConfig'
+import router from '@/router'
+
+const username = ref('')
+const password = ref('')
+const isButtonDisabled = ref(false)
+
+async function handleLogin() {
+  const url = APISettings.baseURL + 'login/'
+  try {
+    isButtonDisabled.value = true
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: APISettings.Headers,
+      body: JSON.stringify({
+        username: username.value,
+        password: password.value
+      })
+    })
+    let data = await response.json()
+    if (!response.ok) throw new Error(data.message)
+    sessionStorage.setItem('token', data.token)
+    alert(data.message)
+    router.replace('dashboard')
+  } catch (err) {
+    alert(err)
+  } finally {
+    isButtonDisabled.value = false
+  }
+}
 </script>
 <style scoped>
 .body {
