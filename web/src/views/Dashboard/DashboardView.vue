@@ -1,12 +1,16 @@
 <template>
   <div class="body">
-    <CreateInvitation />
+    <div class="forms-section">
+      <CreateInvitation />
+      <DeleteInvitation />
+    </div>
     <ViewInvitations />
   </div>
 </template>
 <script setup>
 import CreateInvitation from '@/views/Dashboard/CreateInvitation.vue'
 import ViewInvitations from '@/views/Dashboard/ViewInvitations.vue'
+import DeleteInvitation from '@/views/Dashboard/DeleteInvitation.vue'
 import { onMounted } from 'vue'
 import router from '@/router'
 
@@ -21,5 +25,10 @@ onMounted(() => {
 .body {
   width: 100%;
   padding: 2rem;
+}
+.forms-section{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 </style>
