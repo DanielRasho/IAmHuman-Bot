@@ -29,11 +29,13 @@ func (s *Server) handleGetDashboard(c *gin.Context) {
 			class,
 			section ,
 			missing_uses ,
-			created_at ,
+			to_char(created_at, 'DD-MM-YYYY'),
 			server_id ,
 			role_id,
 			concat($1::text,id) as invitation_url
-		from invitation limit $2 offset $3;`,
+		from invitation
+		order by class, section
+		limit $2 offset $3;`,
 		base_url, limit, offset)
 
 	if err != nil {
