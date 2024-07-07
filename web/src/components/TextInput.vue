@@ -1,8 +1,14 @@
 <template>
-  <input class="input" :type="type" @input="handleInput" :placeholder="placeholder" />
+  <input class="input" :type="type" @input="update" :placeholder="placeholder" />
 </template>
 <script setup>
 const emit = defineEmits(['input'])
+
+const model = defineModel()
+
+function update(event) {
+  model.value = event.target.value
+}
 
 const props = defineProps({
   type: {
@@ -14,10 +20,6 @@ const props = defineProps({
     default: ''
   }
 })
-
-function handleInput(event) {
-  emit('input', event.target.value)
-}
 </script>
 <style scoped>
 .input {
