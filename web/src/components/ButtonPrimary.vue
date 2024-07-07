@@ -1,5 +1,5 @@
 <template>
-  <button class="button" @click="handleClick">
+  <button class="button" @click="handleClick" :disabled="isDisabled">
     <i v-if="preIcon" :class="preIcon"></i>
     {{ text }}
     <i v-if="postIcon" :class="postIcon"></i>
@@ -13,6 +13,11 @@ const props = defineProps({
     type: String,
     required: true,
     default: 'Button'
+  },
+  isDisabled: {
+    type: Boolean,
+    required: false,
+    default: true
   },
   preIcon: {
     type: String,
