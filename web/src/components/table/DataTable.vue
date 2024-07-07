@@ -51,7 +51,7 @@ const props = defineProps({
 })
 
 onMounted(async () => {
-  const data = await props.fetchData(page, props.limit)
+  const data = await props.fetchData(page.value, props.limit)
   rows.value = data.items
   total.value = data.total_pages
 })
