@@ -3,6 +3,7 @@ package server
 import (
 	"encoding/json"
 	"net/http"
+	"os"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -19,6 +20,9 @@ func (s *Server) handleGetDashboard(c *gin.Context) {
 	}
 	offset := (page - 1) * limit
 
+	// FETCH INVITATIONS
+	base_url := os.Getenv("CLIENT_URL") + "assign-role/"
+
 	rows, err := s.db.Query(
 		`select 
 			id,
@@ -27,12 +31,13 @@ func (s *Server) handleGetDashboard(c *gin.Context) {
 			missing_uses ,
 			created_at ,
 			server_id ,
-			role_id 
-		from invitation limit $1 offset $2;`,
-		limit, offset)
+			role_id,
+			concat($1::text,id) as invitation_url
+		from invitation limit $2 offset $3;`,
+		base_url, limit, offset)
 
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"message": "cannot retrieve data from DB"})
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "cannot retrieve data from DB " + err.Error()})
 		return
 	}
 	defer rows.Close()
@@ -47,7 +52,9 @@ func (s *Server) handleGetDashboard(c *gin.Context) {
 			&newInvitation.MissingUses,
 			&newInvitation.CreateAt,
 			&newInvitation.ServerId,
-			&newInvitation.RoleId)
+			&newInvitation.RoleId,
+			&newInvitation.InvitationURL,
+		)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"message": "cannot scan rows from DB"})
 			return
@@ -56,7 +63,20 @@ func (s *Server) handleGetDashboard(c *gin.Context) {
 		}
 	}
 
-	c.IndentedJSON(http.StatusOK, invitations)
+	// COUNTING TOTAL PAGES
+	var rowsCountNum int
+	rowsCount := s.db.QueryRow("select count(id) from invitation;")
+	if err := rowsCount.Scan(&rowsCountNum); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "cannot retrieve data from DB " + err.Error()})
+		return
+	}
+
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"message":      "Data succesfully fetched.",
+		"total_pages":  rowsCountNum / limit,
+		"current_page": page,
+		"items":        invitations,
+	})
 }
 
 func (s *Server) handlePostDashboard(c *gin.Context) {

@@ -21,13 +21,14 @@ type userCredentials struct {
 }
 
 type invitation struct {
-	Id          string    `json:"id"`
-	Class       string    `json:"class"`
-	Section     int       `json:"section"`
-	MissingUses int       `json:"missing_uses"`
-	CreateAt    time.Time `json:"created_at"`
-	ServerId    string    `json:"server_id"`
-	RoleId      string    `json:"role_id"`
+	Id            string    `json:"id"`
+	Class         string    `json:"class"`
+	Section       int       `json:"section"`
+	MissingUses   int       `json:"missing_uses"`
+	CreateAt      time.Time `json:"created_at"`
+	ServerId      string    `json:"server_id"`
+	RoleId        string    `json:"role_id"`
+	InvitationURL string    `json:"invitation_url"`
 }
 
 type discordCode struct {
