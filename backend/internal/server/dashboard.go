@@ -2,6 +2,7 @@ package server
 
 import (
 	"encoding/json"
+	"math"
 	"net/http"
 	"os"
 	"strconv"
@@ -73,9 +74,11 @@ func (s *Server) handleGetDashboard(c *gin.Context) {
 		return
 	}
 
+	total_pages := int(math.Ceil(float64(rowsCountNum) / float64(limit)))
+
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"message":      "Data succesfully fetched.",
-		"total_pages":  rowsCountNum / limit,
+		"total_pages":  total_pages,
 		"current_page": page,
 		"items":        invitations,
 	})
