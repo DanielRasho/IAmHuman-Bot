@@ -39,7 +39,6 @@ async function handleLogin() {
     let data = await response.json()
     if (!response.ok) throw new Error(data.message)
     sessionStorage.setItem('token', data.token)
-    alert(data.message)
     router.replace('dashboard')
   } catch (err) {
     alert(err)
