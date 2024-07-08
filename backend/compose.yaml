@@ -22,7 +22,7 @@ services:
     depends_on:
       - psql
     volumes:
-      - go_dependencies:$GOPATH/pkg/mod
+      - go_dependencies:go/pkg/mod
 
 volumes:
   psql_volume:
