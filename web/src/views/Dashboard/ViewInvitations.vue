@@ -11,7 +11,7 @@
 import SpinLoader from '@/components/SpinLoader.vue'
 import DataTable from '@/components/table/DataTable.vue'
 import { APISettings } from '@/utils/apiConfig'
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 
 const isLoading = ref(false)
 

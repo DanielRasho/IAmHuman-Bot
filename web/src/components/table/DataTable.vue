@@ -1,9 +1,12 @@
 <template>
   <div class="table-container">
-    <div class="pag-controls">
-      <i class="fa-solid fa-chevron-left" @click="decreasePage"></i>
-      <span>{{ page }}/{{ total }}</span>
-      <i class="fa-solid fa-chevron-right" @click="increasePage"></i>
+    <div class="table-controls">
+      <div class="pag-controls">
+        <i class="fa-solid fa-chevron-left" @click="decreasePage"></i>
+        <span>{{ page }}/{{ total }}</span>
+        <i class="fa-solid fa-chevron-right" @click="increasePage"></i>
+      </div>
+      <i class="reload fa-solid fa-rotate-right" @click="reloadData"></i>
     </div>
     <table class="table">
       <thead>
@@ -75,11 +78,15 @@ async function decreasePage() {
   total.value = data.total_pages
 }
 
-onMounted(async () => {
+async function reloadData() {
   const data = await props.fetchData(page.value, props.limit)
   console.log(data)
   rows.value = data.items
   total.value = data.total_pages
+}
+
+onMounted(async () => {
+  reloadData()
 })
 </script>
 <style scoped>
@@ -93,19 +100,26 @@ onMounted(async () => {
   border-collapse: collapse;
   width: fit-content;
 }
+.table-controls {
+  display: flex;
+  justify-content: center;
+}
 .pag-controls {
   margin-bottom: 0.5rem;
 }
 .pag-controls i,
-.pag-controls span {
+.pag-controls span,
+.reload {
   color: var(--white);
   font-size: 1.5rem;
   margin-left: 1ch;
 }
-.pag-controls i {
+.pag-controls i,
+.reload {
   cursor: pointer;
 }
-.pag-controls i:hover {
+.pag-controls i:hover,
+.reload:hover {
   cursor: pointer;
   color: var(--primary);
 }
