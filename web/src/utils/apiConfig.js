@@ -2,7 +2,7 @@ const APISettings = {
   Headers: new Headers({
     Accept: 'application/json'
   }),
-  baseURL: 'http://localhost:8080/'
+  baseURL: import.meta.env.VITE_SERVER_URI || 'http://localhost:8080/'
 }
 
 export { APISettings }
