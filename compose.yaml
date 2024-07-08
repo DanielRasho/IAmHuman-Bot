@@ -2,7 +2,6 @@ services:
   psql:
     image: postgres:latest
     restart: always
-    env_file: ".env.docker"
     environment:
       POSTGRES_DB: ${DB_DATABASE}
       POSTGRES_USER: ${DB_USERNAME}
@@ -14,13 +13,26 @@ services:
       - psql_volume:/var/lib/postgresql/data
   backend:
     build:
-      context: .
+      context: ./backend
       dockerfile: Dockerfile
+    env_file: "./backend/.env.docker"
+    environment:
+      DB_HOST: "psql"
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_PORT: ${DB_PORT}
     ports:
       - "8080:8080"
-    env_file: ".env.docker"
     depends_on:
       - psql
+
+  frontend:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
 
 volumes:
   psql_volume:
