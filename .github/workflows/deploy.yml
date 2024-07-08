@@ -51,14 +51,3 @@ jobs:
       - name: Deploy to Github Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
-  build-backend:
-    runs-on: self-hosted
-    steps:
-      - name: Check out the repository
-        uses: actions/checkout@v3
-
-      - name: Deploy to Self-hosted Server
-        run: |
-          docker compose -f ./backend/compose.yaml down -v
-          docker compose -f ./backend/compose.yaml up -d --build
