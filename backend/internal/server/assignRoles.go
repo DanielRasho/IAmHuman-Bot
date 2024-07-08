@@ -129,12 +129,13 @@ func (s *Server) handlePostAssignRoleSuccess(c *gin.Context) {
 func ExchangeCodeForToken(code string) (*tokenResponse, error) {
 	clientId := os.Getenv("DISCORD_CLIENT_ID")
 	clientSecret := os.Getenv("DISCORD_CLIENT_SECRET")
+	redirectUri := os.Getenv("CLIENT_URL") + "assign-role/callback"
 
 	// Create body
 	data := url.Values{}
 	data.Set("grant_type", "authorization_code")
 	data.Set("code", code)
-	data.Set("redirect_uri", "http://localhost:3000/#/assign-role/callback")
+	data.Set("redirect_uri", redirectUri)
 
 	// Creating requests
 	client := &http.Client{}
