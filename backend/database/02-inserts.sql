@@ -1,7 +1,7 @@
 -- Dummy Data
 INSERT INTO member (username, password)
 values
-	('dummy', 123);
+	('lacuevaAdmin', 'l4r4v3l#');
 
 -- INSERT INTO post ( author, title, tags, thumbnailpath, contentpath )
 -- values

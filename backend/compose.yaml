@@ -21,11 +21,7 @@ services:
     env_file: ".env.docker"
     depends_on:
       - psql
-    volumes:
-      - go_dependencies:go/pkg/mod
 
 volumes:
   psql_volume:
-    driver: local
-  go_dependencies:
     driver: local
