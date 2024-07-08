@@ -2,6 +2,7 @@ services:
   psql:
     image: postgres:latest
     restart: always
+    env_file: ".env.docker"
     environment:
       POSTGRES_DB: ${DB_DATABASE}
       POSTGRES_USER: ${DB_USERNAME}
@@ -11,7 +12,20 @@ services:
     volumes:
       - ./database/:/docker-entrypoint-initdb.d/
       - psql_volume:/var/lib/postgresql/data
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    env_file: ".env.docker"
+    depends_on:
+      - psql
+    volumes:
+      - go_dependencies:$GOPATH/pkg/mod
 
 volumes:
   psql_volume:
+    driver: local
+  go_dependencies:
     driver: local
